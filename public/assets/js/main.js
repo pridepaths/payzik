@@ -51,4 +51,34 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
+
+  // Scroll-reveal: fade + slide up as sections and cards enter the viewport
+  var revealTargets = document.querySelectorAll(
+    '.hero-copy, .hero-media, .split-copy, .split-media, .why-matters, .feature-card, ' +
+    '.capability-item, .benefits, .benefit-card, .trust-card, .get-started, .site-footer'
+  );
+
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    revealTargets.forEach(function (el, i) {
+      el.classList.add('reveal');
+      // small stagger for elements grouped in the same grid/row
+      el.style.transitionDelay = (i % 6) * 60 + 'ms';
+    });
+
+    var revealObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    revealTargets.forEach(function (el) {
+      revealObserver.observe(el);
+    });
+  }
 });

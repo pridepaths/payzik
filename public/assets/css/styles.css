@@ -105,13 +105,9 @@ p { color: var(--gray-700); line-height: 1.6; margin: 0; }
   justify-content: space-between;
   height: 76px;
 }
-.logo img { height: 26px; width: auto; }
-.wordmark {
-  font-weight: 800;
-  font-size: 1.3rem;
-  letter-spacing: -0.02em;
-  color: var(--purple-600);
-}
+.logo { display: flex; align-items: center; }
+.logo-img { height: 24px; width: auto; display: block; }
+.footer-brand .logo-img { height: 22px; margin-bottom: 14px; }
 .nav-links {
   display: flex;
   align-items: center;
@@ -360,7 +356,6 @@ p { color: var(--gray-700); line-height: 1.6; margin: 0; }
   padding-bottom: 40px;
   border-bottom: 1px solid var(--gray-200);
 }
-.footer-brand img { height: 24px; margin-bottom: 14px; }
 .footer-brand p { font-size: 0.9rem; max-width: 32ch; }
 .footer-col h5 { font-size: 0.9rem; margin: 0 0 16px; color: var(--ink); }
 .footer-col ul { display: flex; flex-direction: column; gap: 12px; }
@@ -373,6 +368,38 @@ p { color: var(--gray-700); line-height: 1.6; margin: 0; }
 }
 .footer-bottom .legal-links { display: flex; gap: 18px; }
 .footer-bottom a:hover { color: var(--purple-600); }
+
+/* =========================================================
+   Scroll-reveal animation
+   ========================================================= */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* Card lift on hover, matching the button micro-interaction */
+.feature-card, .capability-item, .benefit-card, .trust-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.feature-card:hover, .capability-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(38, 0, 94, 0.08);
+}
+.benefit-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+.trust-card:hover img { transform: scale(1.04); }
+.trust-card img { transition: transform 0.35s ease; }
 
 /* =========================================================
    Responsive
@@ -412,6 +439,11 @@ p { color: var(--gray-700); line-height: 1.6; margin: 0; }
   .feature-grid { grid-template-columns: 1fr 1fr; }
   .benefit-grid { grid-template-columns: 1fr; }
 
+  /* Let the dashboard screenshot bleed to the card's rounded edges instead of sitting
+     inset behind the card's own side padding — matches the original design, where it's flush. */
+  .get-started-media { margin: 44px -24px 0; }
+  .get-started-media img { width: calc(100% + 48px); max-width: none; }
+
   .trust-grid { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3, 160px); }
   .trust-card--tall { grid-row: span 1; grid-column: span 2; }
 
@@ -427,5 +459,7 @@ p { color: var(--gray-700); line-height: 1.6; margin: 0; }
   .trust-card--tall { grid-column: span 1; grid-row: span 1; }
   .footer-top { grid-template-columns: 1fr; }
   .why-matters, .benefits, .get-started { margin: 0 10px; padding-left: 18px; padding-right: 18px; }
+  .get-started-media { margin: 44px -18px 0; }
+  .get-started-media img { width: calc(100% + 36px); }
   .footer-bottom { flex-direction: column; align-items: flex-start; }
 }
