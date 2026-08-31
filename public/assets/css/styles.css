@@ -374,8 +374,8 @@ p { color: var(--gray-700); line-height: 1.6; margin: 0; }
    ========================================================= */
 .reveal {
   opacity: 0;
-  transform: translateY(22px);
-  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(34px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 .reveal.is-visible {
@@ -386,20 +386,132 @@ p { color: var(--gray-700); line-height: 1.6; margin: 0; }
   .reveal { opacity: 1; transform: none; transition: none; }
 }
 
-/* Card lift on hover, matching the button micro-interaction */
+/* Card lift on hover/tap, matching the button micro-interaction.
+   :active covers touch devices (phones/tablets) that never fire :hover. */
 .feature-card, .capability-item, .benefit-card, .trust-card {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease;
 }
-.feature-card:hover, .capability-item:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 24px rgba(38, 0, 94, 0.08);
+.feature-card:hover, .capability-item:hover,
+.feature-card:active, .capability-item:active {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(38, 0, 94, 0.1);
 }
-.benefit-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(255, 255, 255, 0.22);
+.benefit-card:hover, .benefit-card:active {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.28);
 }
-.trust-card:hover img { transform: scale(1.04); }
-.trust-card img { transition: transform 0.35s ease; }
+.trust-card { overflow: hidden; }
+.trust-card:hover img, .trust-card:active img { transform: scale(1.05); }
+.trust-card img { transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
+
+/* Buttons: visible feedback on hover AND on tap (mobile has no :hover) */
+.btn { transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.18s ease, box-shadow 0.18s ease; }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(38, 0, 94, 0.14); }
+.btn:active { transform: translateY(0) scale(0.97); box-shadow: none; }
+
+/* Nav links: subtle underline + color shift on hover/tap */
+.nav-link { transition: color 0.18s ease; position: relative; }
+.nav-link:hover, .nav-link:active { color: var(--purple-600, #5B1BBF); }
+li:not(.has-dropdown) > .nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 100%; bottom: -4px;
+  height: 2px;
+  background: var(--purple-600, #5B1BBF);
+  transition: right 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+li:not(.has-dropdown) > .nav-link:hover::after { right: 0; }
+
+/* Logo: gentle scale feedback */
+.logo { transition: transform 0.18s ease; display: inline-flex; }
+.logo:hover, .logo:active { transform: scale(1.03); }
+
+/* =========================================================
+   Request Demo modal
+   ========================================================= */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(20, 8, 46, 0.6);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s;
+}
+.modal-overlay.open { opacity: 1; visibility: visible; }
+.modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background: var(--white, #fff);
+  border-radius: 20px;
+  box-shadow: 0 24px 64px rgba(20, 8, 46, 0.35);
+  padding: 36px 32px 32px;
+  transform: translateY(18px) scale(0.97);
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s ease;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+}
+.modal-overlay.open .modal-card { transform: translateY(0) scale(1); opacity: 1; }
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: var(--gray-100, #f3f0fa);
+  color: var(--gray-600, #6b6478);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+.modal-close:hover { background: var(--lavender-100, #ece3fb); transform: rotate(90deg); }
+.modal-eyebrow {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--purple-600, #5B1BBF);
+  margin-bottom: 8px;
+}
+.modal-card h3 { font-size: 24px; margin: 0 0 8px; }
+.modal-sub { color: var(--gray-600, #6b6478); font-size: 14px; margin: 0 0 22px; line-height: 1.5; }
+.modal-field {
+  display: block;
+  margin-bottom: 16px;
+  text-align: left;
+}
+.modal-field span { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--gray-800, #2c2438); }
+.modal-field em { font-weight: 400; font-style: normal; color: var(--gray-500, #8f899c); }
+.modal-field input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--gray-200, #e4dff2);
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: inherit;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+.modal-field input:focus {
+  outline: none;
+  border-color: var(--purple-600, #5B1BBF);
+  box-shadow: 0 0 0 3px rgba(91, 27, 191, 0.12);
+}
+.modal-error { color: #c0392b; font-size: 13px; margin: 10px 0 0; }
+.modal-success { text-align: center; padding: 12px 4px; }
+.modal-success svg { color: var(--purple-600, #5B1BBF); margin-bottom: 14px; }
+.modal-success h3 { margin: 0 0 8px; }
+.modal-success p { color: var(--gray-600, #6b6478); font-size: 14px; margin: 0 0 22px; line-height: 1.5; }
 
 /* =========================================================
    Responsive

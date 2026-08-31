@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/styles.css" />
+<link rel="stylesheet" href="/assets/css/styles.css?v=2" />
 </head>
 <body>
 
@@ -38,7 +38,7 @@
     </ul>
 
     <div class="nav-actions">
-      <a href="#get-started" class="btn btn-primary">Request Demo</a>
+      <a href="#get-started" class="btn btn-primary js-open-demo">Request Demo</a>
       <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
         <span></span><span></span><span></span>
       </button>
@@ -55,7 +55,7 @@
         <h1>Run All <span class="accent">Payments</span> Through a Single Integration</h1>
         <p class="lead">A unified payment orchestration layer for digital businesses, manage and optimize payments across multiple RBI-licensed Payment Aggregators through a single integration.</p>
         <div class="cta-row">
-          <a href="#get-started" class="btn btn-primary">Request Demo</a>
+          <a href="#get-started" class="btn btn-primary js-open-demo">Request Demo</a>
           <a href="#company" class="btn btn-secondary">Talk to Sales</a>
         </div>
       </div>
@@ -75,7 +75,7 @@
         <p class="eyebrow" style="font-weight:700; margin-bottom:6px;">What You Get</p>
         <h2>Operate Payments Seamlessly at Scale</h2>
         <p>Enable your business to collect payments from customers via cards, UPI, wallets, net-banking and more — all through a single, secure gateway. Built for scale and designed for reliability.</p>
-        <a href="#get-started" class="btn btn-primary">Request Demo</a>
+        <a href="#get-started" class="btn btn-primary js-open-demo">Request Demo</a>
       </div>
     </div>
   </section>
@@ -175,7 +175,7 @@
         <h2>One Integration. Multiple Payment Aggregators.</h2>
         <p>Integrate once with Payzik to connect with multiple RBI-licensed Payment Aggregators.</p>
         <p style="margin-top:12px;">Payzik orchestrates routing, resilience, and observability while regulated activities remain with the PAs.</p>
-        <a href="#get-started" class="btn btn-primary">Request Demo</a>
+        <a href="#get-started" class="btn btn-primary js-open-demo">Request Demo</a>
       </div>
     </div>
   </section>
@@ -246,7 +246,7 @@
       <div class="get-started">
         <h2>Get Started</h2>
         <p>Ready to take control of your payment stack?</p>
-        <a href="#company" class="btn btn-primary">Request Demo</a>
+        <a href="#" class="btn btn-primary js-open-demo">Request Demo</a>
         <div class="get-started-media">
           <img src="/assets/img/dashboard_mockup.webp" alt="Payzik merchant dashboard showing balances and wallet cards" />
         </div>
@@ -297,6 +297,38 @@
   </div>
 </footer>
 
-<script src="/assets/js/main.js"></script>
+<!-- REQUEST DEMO MODAL -->
+<div class="modal-overlay" id="demoModal" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="demoModalTitle">
+    <button class="modal-close" id="demoModalClose" aria-label="Close">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div class="modal-body" id="demoModalBody">
+      <span class="modal-eyebrow">Payzik</span>
+      <h3 id="demoModalTitle">Request a Demo</h3>
+      <p class="modal-sub">Tell us where to send it — our team will reach out to set up your walkthrough.</p>
+      <form id="demoForm" novalidate>
+        <label class="modal-field">
+          <span>Work email</span>
+          <input type="email" name="email" id="demoEmail" placeholder="you@company.com" required />
+        </label>
+        <label class="modal-field">
+          <span>Company name <em>(optional)</em></span>
+          <input type="text" name="company" id="demoCompany" placeholder="Your company" />
+        </label>
+        <button type="submit" class="btn btn-primary btn-block" id="demoSubmit">Request Demo</button>
+        <p class="modal-error" id="demoError" hidden>Please enter a valid work email.</p>
+      </form>
+    </div>
+    <div class="modal-success" id="demoSuccess" hidden>
+      <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.5 2.5L16 9"/></svg>
+      <h3>You're on the list</h3>
+      <p>Thanks — a Payzik team member will email you shortly to schedule your demo.</p>
+      <button type="button" class="btn btn-secondary" id="demoDone">Done</button>
+    </div>
+  </div>
+</div>
+
+<script src="/assets/js/main.js?v=2"></script>
 </body>
 </html>
